@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import { TbFidgetSpinner } from "react-icons/tb";
+import { ImSpinner9 } from "react-icons/im";
 
 export const Menu = styled.aside`
   background: #202020;
@@ -53,7 +53,7 @@ const spin = keyframes`
   }
 `;
 
-export const Spinner = styled(TbFidgetSpinner)`
+export const Spinner = styled(ImSpinner9)`
   transform-origin: center;
-  animation: ${spin} 800ms infinite;
+  animation: ${spin} 1200ms linear infinite;
 `;
