@@ -15,6 +15,7 @@ type GameContextProps = {
   isGameReady: boolean;
   setIsGameReady: React.Dispatch<React.SetStateAction<boolean>>;
   score: number;
+  handleLoseGame: () => void;
 };
 
 export const GameContext = React.createContext({} as GameContextProps);
@@ -113,6 +114,7 @@ export const GameProvider = ({ children }: Props) => {
         isGameReady,
         setIsGameReady,
         score,
+        handleLoseGame,
       }}
     >
       {children}

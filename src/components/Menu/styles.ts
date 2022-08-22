@@ -5,7 +5,7 @@ export const Menu = styled.aside`
   background: #202020;
   width: 300px;
   float: right;
-  padding: 32px 16px;
+  padding: 32px 24px;
 
   @media (max-width: 768px) {
     display: none;
@@ -35,12 +35,15 @@ export const Icon = styled.span`
     cursor: pointer;
   }
 `;
+export const Results = styled.div`
+  margin-top: 64px;
+`;
 
 export const Score = styled.p`
-  margin-top: 64px;
   color: white;
   font-weight: 600;
   font-size: 18px;
+  line-height: 36px;
 `;
 
 const spin = keyframes`
@@ -56,4 +59,29 @@ const spin = keyframes`
 export const Spinner = styled(ImSpinner9)`
   transform-origin: center;
   animation: ${spin} 1200ms linear infinite;
+`;
+
+export const Button = styled.button`
+  margin-top: 64px;
+  background-color: #dc3545;
+  border: none;
+  border-radius: 8px;
+  width: 100%;
+  padding: 16px 8px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  font-weight: 600;
+  font-size: 24px;
+  color: white;
+
+  transition: 300ms;
+
+  &:hover {
+    cursor: pointer;
+    filter: brightness(1.25);
+  }
 `;
