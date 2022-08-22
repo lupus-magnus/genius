@@ -2,7 +2,7 @@ import styled, { keyframes } from "styled-components";
 import { TbFidgetSpinner } from "react-icons/tb";
 
 export const Menu = styled.aside`
-  background: #392759;
+  background: #202020;
   width: 300px;
   float: right;
   padding: 32px 16px;
