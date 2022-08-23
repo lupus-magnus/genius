@@ -57,19 +57,26 @@ export const GameProvider = ({ children }: Props) => {
   };
 
   const handleCheckAnswer = () => {
-    if (areArraysEqual(playersAnswer, currentSequence as number[])) {
-      setScore((prev) => prev + 1);
-      console.log("Boa! Próximo nível...");
+    if (
+      areArraysEqual(
+        playersAnswer,
+        currentSequence?.slice(0, playersAnswer.length) as number[]
+      )
+    ) {
+      if (playersAnswer.length === currentSequence?.length) {
+        setScore((prev) => prev + 1);
+        console.log("Boa! Próximo nível...");
+      }
     } else {
       handleLoseGame();
     }
-    setPlayersAnswer([]);
   };
 
   const handleCloseModal = () => setDisplayModal(false);
 
   // Whenever the score changes, display a new sequence and wait for the user's answer
   useEffect(() => {
+    setPlayersAnswer([]);
     if (isGameReady) {
       const newSequence = increaseRandomSequence(currentSequence ?? []);
       setCurrentSequence(newSequence);
@@ -103,8 +110,12 @@ export const GameProvider = ({ children }: Props) => {
   // Checks user answer when answer length matches current sequence.
   useEffect(() => {
     if (isGameReady) {
-      if (playersAnswer.length === currentSequence?.length) {
-        console.log({ playersAnswer, currentSequence });
+      if (playersAnswer.length >= 1) {
+        console.log({
+          playersAnswer,
+          currentSequence,
+          currentSequenceSlice: currentSequence?.slice(0, playersAnswer.length),
+        });
         handleCheckAnswer();
       }
     }

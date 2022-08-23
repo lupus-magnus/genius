@@ -9,7 +9,7 @@ export const Game = () => {
     <S.Game>
       <GameControls mobile />
       <Board />
-      <SocialLinks />
+      <SocialLinks mobile />
     </S.Game>
   );
 };
