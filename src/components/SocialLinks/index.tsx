@@ -1,9 +1,14 @@
 import { BsGithub, BsLinkedin } from "react-icons/bs";
 import { SocialMediaBox } from "../SocialMediaBox";
 import * as S from "./styles";
-export const SocialLinks = () => {
+
+type Props = {
+  mobile?: boolean;
+};
+
+export const SocialLinks = ({ mobile }: Props) => {
   return (
-    <S.SocialSection>
+    <S.SocialSection mobile={mobile}>
       <S.Header>Keep in touch!</S.Header>
       <S.SocialLinks>
         <SocialMediaBox
