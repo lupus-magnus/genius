@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
+import { GameContext } from "../../contexts/GameContext";
+import { ModalFeedback } from "../ModalFeedback";
 
 import * as S from "./styles";
 
@@ -7,5 +9,10 @@ type Props = {
 };
 
 export const GameContainer = ({ children }: Props) => {
-  return <S.Container>{children}</S.Container>;
+  return (
+    <>
+      <ModalFeedback />
+      <S.Container>{children}</S.Container>
+    </>
+  );
 };
