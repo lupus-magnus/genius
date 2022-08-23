@@ -3,10 +3,13 @@ import { TbPlayerPlay } from "react-icons/tb";
 import { AiOutlineFlag } from "react-icons/ai";
 import { GameContext } from "../../contexts/GameContext";
 import * as S from "./styles";
+import { useGameLogic } from "../../hooks/useGameLogic";
 
 export const Menu = () => {
   const { isGameReady, setIsGameReady, score, isPlayersTurn, handleLoseGame } =
     useContext(GameContext);
+  const { gameSounds } = useGameLogic();
+
   return (
     <S.Menu>
       <S.Header>
@@ -20,7 +23,12 @@ export const Menu = () => {
         {isGameReady ? (
           <S.Spinner color={isPlayersTurn ? "#c77225" : "white"} />
         ) : (
-          <TbPlayerPlay onClick={() => setIsGameReady(true)} />
+          <TbPlayerPlay
+            onClick={() => {
+              gameSounds.start.play();
+              setIsGameReady(true);
+            }}
+          />
         )}
       </S.Icon>
       <S.Results>

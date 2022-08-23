@@ -16,6 +16,8 @@ type GameContextProps = {
   setIsGameReady: React.Dispatch<React.SetStateAction<boolean>>;
   score: number;
   handleLoseGame: () => void;
+  displayModal: boolean;
+  handleCloseModal: () => void;
 };
 
 export const GameContext = React.createContext({} as GameContextProps);
@@ -25,11 +27,12 @@ type Props = {
 };
 
 export const GameProvider = ({ children }: Props) => {
-  const { buttons, increaseRandomSequence } = useGameLogic();
+  const { buttons, increaseRandomSequence, gameSounds } = useGameLogic();
 
   const [isGameReady, setIsGameReady] = useState(false);
   const [currentSequence, setCurrentSequence] = useState<null | number[]>(null);
   const [activeButton, setActiveButton] = useState<null | 1 | 2 | 3 | 4>(null);
+  const [displayModal, setDisplayModal] = useState(false);
 
   const [score, setScore] = useState(0);
   const [isPlayersTurn, setIsPlayersTurn] = useState(false);
@@ -43,12 +46,14 @@ export const GameProvider = ({ children }: Props) => {
   };
 
   const handleLoseGame = () => {
+    setDisplayModal(true);
     setScore(0);
     setIsPlayersTurn(false);
     setPlayersAnswer([]);
     setCurrentSequence([]);
     setIsGameReady(false);
     console.log("You lose...");
+    gameSounds.fail.play();
   };
 
   const handleCheckAnswer = () => {
@@ -61,6 +66,8 @@ export const GameProvider = ({ children }: Props) => {
     setPlayersAnswer([]);
   };
 
+  const handleCloseModal = () => setDisplayModal(false);
+
   // Whenever the score changes, display a new sequence and wait for the user's answer
   useEffect(() => {
     if (isGameReady) {
@@ -69,7 +76,7 @@ export const GameProvider = ({ children }: Props) => {
 
       (async function displaySequence() {
         setIsPlayersTurn(false);
-        await wait(1000).then(async () => {
+        await wait(1500).then(async () => {
           for (const buttonId of newSequence) {
             await wait(800);
             setActiveButton(buttonId as 1 | 2 | 3 | 4);
@@ -115,6 +122,8 @@ export const GameProvider = ({ children }: Props) => {
         setIsGameReady,
         score,
         handleLoseGame,
+        displayModal,
+        handleCloseModal,
       }}
     >
       {children}
