@@ -12,6 +12,14 @@ export const Header = styled.h1`
   font-family: Arial, Helvetica, sans-serif;
 `;
 
+export const CountdownContainer = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+`;
+
 export const Board = styled.div`
   background-color: #202020;
   width: 500px;
