@@ -84,4 +84,19 @@ export const Button = styled.button`
     cursor: pointer;
     filter: brightness(1.25);
   }
+
+  &:disabled {
+    filter: brightness(0.25);
+    cursor: not-allowed;
+  }
+`;
+
+export const SocialSection = styled.section`
+  margin-top: 48px;
+`;
+
+export const SocialLinks = styled.div`
+  margin-top: 16px;
+  display: flex;
+  gap: 16px;
 `;

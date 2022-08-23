@@ -1,9 +1,13 @@
 import { useContext } from "react";
+import { BsGithub, BsLinkedin } from "react-icons/bs";
 import { TbPlayerPlay } from "react-icons/tb";
 import { AiOutlineFlag } from "react-icons/ai";
+
 import { GameContext } from "../../contexts/GameContext";
-import * as S from "./styles";
 import { useGameLogic } from "../../hooks/useGameLogic";
+
+import * as S from "./styles";
+import { SocialMediaBox } from "../SocialMediaBox";
 
 export const Menu = () => {
   const { isGameReady, setIsGameReady, score, isPlayersTurn, handleLoseGame } =
@@ -35,9 +39,23 @@ export const Menu = () => {
         <S.Score>Score: {score}</S.Score>
         <S.Score>Best: 0</S.Score>
       </S.Results>
-      <S.Button onClick={handleLoseGame}>
+      <S.Button disabled={!isGameReady} onClick={handleLoseGame}>
         <AiOutlineFlag /> Give up
       </S.Button>
+
+      <S.SocialSection>
+        <S.Header>Keep in touch!</S.Header>
+        <S.SocialLinks>
+          <SocialMediaBox
+            link="https://www.linkedin.com/in/lupus-magnus/"
+            icon={<BsLinkedin />}
+          />
+          <SocialMediaBox
+            link="https://github.com/lupus-magnus"
+            icon={<BsGithub />}
+          />
+        </S.SocialLinks>
+      </S.SocialSection>
     </S.Menu>
   );
 };
