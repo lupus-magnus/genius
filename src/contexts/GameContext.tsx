@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useGameLogic } from "../hooks/useGameLogic";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 import { areArraysEqual, wait } from "../utils";
 
+type ModalDTO = {
+  isOpen: boolean;
+  model: "default" | "bestScore";
+};
 type GameContextProps = {
   buttons: {
     id: number;
@@ -16,8 +21,9 @@ type GameContextProps = {
   setIsGameReady: React.Dispatch<React.SetStateAction<boolean>>;
   score: number;
   handleLoseGame: () => void;
-  displayModal: boolean;
+  displayModal: ModalDTO;
   handleCloseModal: () => void;
+  bestScore: string;
 };
 
 export const GameContext = React.createContext({} as GameContextProps);
@@ -32,11 +38,16 @@ export const GameProvider = ({ children }: Props) => {
   const [isGameReady, setIsGameReady] = useState(false);
   const [currentSequence, setCurrentSequence] = useState<null | number[]>(null);
   const [activeButton, setActiveButton] = useState<null | 1 | 2 | 3 | 4>(null);
-  const [displayModal, setDisplayModal] = useState(false);
+  const [displayModal, setDisplayModal] = useState<ModalDTO>({
+    isOpen: false,
+    model: "default",
+  });
 
   const [score, setScore] = useState(0);
   const [isPlayersTurn, setIsPlayersTurn] = useState(false);
   const [playersAnswer, setPlayersAnswer] = useState([] as number[]);
+
+  const [bestScore, setBestScore] = useLocalStorage("@lupus_genius_bs", "0");
 
   const handleClickButton = (buttonId: number) => {
     if (isPlayersTurn) {
@@ -46,7 +57,15 @@ export const GameProvider = ({ children }: Props) => {
   };
 
   const handleLoseGame = () => {
-    setDisplayModal(true);
+    const isNewBestScore = !bestScore || Number(bestScore) < score;
+    if (isNewBestScore) {
+      setBestScore(String(score));
+      console.log("New best score!");
+    }
+    setDisplayModal({
+      model: isNewBestScore ? "bestScore" : "default",
+      isOpen: true,
+    });
     setScore(0);
     setIsPlayersTurn(false);
     setPlayersAnswer([]);
@@ -72,7 +91,8 @@ export const GameProvider = ({ children }: Props) => {
     }
   };
 
-  const handleCloseModal = () => setDisplayModal(false);
+  const handleCloseModal = () =>
+    setDisplayModal({ ...displayModal, isOpen: false });
 
   // Whenever the score changes, display a new sequence and wait for the user's answer
   useEffect(() => {
@@ -127,6 +147,7 @@ export const GameProvider = ({ children }: Props) => {
       value={{
         buttons,
         activeButton,
+        bestScore,
         handleClickButton,
         isPlayersTurn,
         isGameReady,

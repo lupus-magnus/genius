@@ -12,8 +12,14 @@ type Props = {
 };
 
 export const GameControls = ({ mobile }: Props) => {
-  const { isGameReady, setIsGameReady, score, isPlayersTurn, handleLoseGame } =
-    useContext(GameContext);
+  const {
+    isGameReady,
+    setIsGameReady,
+    score,
+    bestScore,
+    isPlayersTurn,
+    handleLoseGame,
+  } = useContext(GameContext);
   const { gameSounds } = useGameLogic();
 
   return (
@@ -39,7 +45,7 @@ export const GameControls = ({ mobile }: Props) => {
       </S.Icon>
       <S.Results>
         <S.Score>Score: {score}</S.Score>
-        <S.Score>Best: 0</S.Score>
+        <S.Score>Best: {bestScore}</S.Score>
       </S.Results>
       <S.Button disabled={!isGameReady} onClick={handleLoseGame}>
         <AiOutlineFlag /> Give up
