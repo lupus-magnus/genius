@@ -3,8 +3,7 @@ import { GameContext } from "../../contexts/GameContext";
 import * as S from "./styles";
 
 export const Game = () => {
-  const { buttons, activeButton, handleClickButton, isPlayersTurn } =
-    useContext(GameContext);
+  const { buttons, activeButton, handleClickButton } = useContext(GameContext);
   return (
     <S.Game>
       <S.Board>

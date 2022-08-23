@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import { GameContext } from "../../contexts/GameContext";
+import React from "react";
 import { ModalFeedback } from "../ModalFeedback";
 
 import * as S from "./styles";
