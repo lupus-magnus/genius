@@ -17,6 +17,9 @@ export const customModalStyles = {
     minHeight: "300px",
     borderRadius: "16px",
   },
+  overlay: {
+    zIndex: 3,
+  },
 };
 
 export const Container = styled.div`
