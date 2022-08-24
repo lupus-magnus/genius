@@ -14,6 +14,8 @@ export const customModalStyles = {
     maxWidth: "90%",
     minHeight: "300px",
     borderRadius: "16px",
+
+    overflow: "hidden",
   },
   overlay: {
     zIndex: 3,

@@ -3,6 +3,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 48px;
+  position: relative;
 `;
 
 export const Title = styled.span`
@@ -10,17 +11,28 @@ export const Title = styled.span`
   font-size: 22px;
 `;
 
-export const BestScore = styled.p`
-  font-weight: 800;
-  text-transform: uppercase;
-  font-size: 40px;
+export const Results = styled.div`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   color: #c77225;
-  border-bottom: 2px solid #c77225;
-  transform: translate(-75%, -100%) rotate(30deg);
+`;
 
-  @media (max-width: 860px) {
-    transform: translate(-25%, -100%) rotate(30deg);
-  }
+export const Highlight = styled.p`
+  text-align: center;
+  font-weight: 700;
+  font-size: 64px;
+  color: white;
+`;
+
+export const BestScore = styled.p`
+  text-align: center;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 128px;
+
+  white-space: nowrap;
 `;
 
 export const Illustration = styled.img`
@@ -28,6 +40,9 @@ export const Illustration = styled.img`
   max-width: 100%;
   height: auto;
   align-self: center;
+
+  opacity: 0.25;
+  filter: blur(2px);
 `;
 
 export const Options = styled.div`
