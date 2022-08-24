@@ -62,10 +62,12 @@ export const GameProvider = ({ children }: Props) => {
       setBestScore(String(score));
       console.log("New best score!");
     }
+
     setDisplayModal({
       model: isNewBestScore ? "bestScore" : "default",
       isOpen: true,
     });
+
     setScore(0);
     setIsPlayersTurn(false);
     setPlayersAnswer([]);
