@@ -1,17 +1,17 @@
 import { useContext } from "react";
+
+import { buttons } from "../../utils";
+
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { GameContext } from "../../contexts/GameContext";
+import { useGameLogic } from "../../hooks/useGameLogic";
+
 import * as S from "./styles";
 
 export const Board = () => {
-  const {
-    buttons,
-    activeButton,
-    handleClickButton,
-    handleLoseGame,
-    isGameReady,
-    isPlayersTurn,
-  } = useContext(GameContext);
+  const { activeButton, isGameReady, isPlayersTurn } = useContext(GameContext);
+  const { handleClickBoardButton, handleLoseGame } = useGameLogic();
+
   return (
     <S.BoardContainer>
       <S.CountdownContainer>
@@ -32,7 +32,7 @@ export const Board = () => {
             key={button.id}
             active={button.id === activeButton}
             onClick={() => {
-              handleClickButton(button.id);
+              handleClickBoardButton(button.id);
             }}
             color={button.color}
           />

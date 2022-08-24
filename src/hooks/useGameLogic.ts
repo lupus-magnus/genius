@@ -1,28 +1,23 @@
-import { gameSounds, buttons } from "../utils";
+import { useContext } from "react";
+
+import { GameContext } from "../contexts/GameContext";
 
 export const useGameLogic = () => {
-  const handleChooseRandomButton = () => Math.floor(Math.random() * 4) + 1;
+  const Game = useContext(GameContext);
 
-  const handleRandomizeSequence = (length: number) => {
-    const sequence = [];
-    for (let i = 0; i < length; i++) {
-      sequence.push(handleChooseRandomButton());
+  const handleClickBoardButton = (buttonId: number) => {
+    if (Game.isPlayersTurn) {
+      Game.setActiveButton(buttonId as 1 | 2 | 3 | 4);
+      Game.setPlayersAnswer([...Game.playersAnswer, buttonId]);
     }
-
-    console.log("random sequence:", sequence);
-    return sequence;
   };
 
-  const increaseRandomSequence = (sequence: number[]): number[] => {
-    const newElement = handleChooseRandomButton();
-    const newSequence = [...sequence, newElement];
-    return newSequence;
-  };
+  const handleCloseModal = () =>
+    Game.setDisplayModal({ ...Game.displayModal, isOpen: false });
 
   return {
-    handleRandomizeSequence,
-    buttons,
-    increaseRandomSequence,
-    gameSounds,
+    handleClickBoardButton,
+    handleCloseModal,
+    handleLoseGame: Game.handleLoseGame,
   };
 };

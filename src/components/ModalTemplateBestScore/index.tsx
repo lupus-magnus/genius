@@ -1,11 +1,14 @@
 import { useContext } from "react";
 
 import { GameContext } from "../../contexts/GameContext";
+import { useGameLogic } from "../../hooks/useGameLogic";
 
 import * as S from "./styles";
 
 export const ModalTemplateBestScore = () => {
-  const { handleCloseModal, bestScore } = useContext(GameContext);
+  const { bestScore } = useContext(GameContext);
+  const { handleCloseModal } = useGameLogic();
+
   return (
     <S.Container>
       <S.Title>New best score!</S.Title>

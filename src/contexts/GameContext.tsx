@@ -1,30 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useGameLogic } from "../hooks/useGameLogic";
+
 import { useLocalStorage } from "../hooks/useLocalStorage";
-import { areArraysEqual, wait } from "../utils";
-
-type ModalDTO = {
-  isOpen: boolean;
-  model: "default" | "bestScore";
-};
-type GameContextProps = {
-  buttons: {
-    id: number;
-    color: string;
-    sound: HTMLAudioElement;
-  }[];
-  activeButton: null | 1 | 2 | 3 | 4;
-
-  handleClickButton: (buttonId: number) => void;
-  isPlayersTurn: boolean;
-  isGameReady: boolean;
-  setIsGameReady: React.Dispatch<React.SetStateAction<boolean>>;
-  score: number;
-  handleLoseGame: () => void;
-  displayModal: ModalDTO;
-  handleCloseModal: () => void;
-  bestScore: string;
-};
+import {
+  areArraysEqual,
+  wait,
+  increaseRandomSequence,
+  buttons,
+  gameSounds,
+} from "../utils";
+import { GameContextProps, ModalDTO } from "../interfaces";
 
 export const GameContext = React.createContext({} as GameContextProps);
 
@@ -33,8 +17,6 @@ type Props = {
 };
 
 export const GameProvider = ({ children }: Props) => {
-  const { buttons, increaseRandomSequence, gameSounds } = useGameLogic();
-
   const [isGameReady, setIsGameReady] = useState(false);
   const [currentSequence, setCurrentSequence] = useState<null | number[]>(null);
   const [activeButton, setActiveButton] = useState<null | 1 | 2 | 3 | 4>(null);
@@ -49,10 +31,19 @@ export const GameProvider = ({ children }: Props) => {
 
   const [bestScore, setBestScore] = useLocalStorage("@lupus_genius_bs", "0");
 
-  const handleClickButton = (buttonId: number) => {
-    if (isPlayersTurn) {
-      setActiveButton(buttonId as 1 | 2 | 3 | 4);
-      setPlayersAnswer([...playersAnswer, buttonId]);
+  const handleCheckAnswer = () => {
+    if (
+      areArraysEqual(
+        playersAnswer,
+        currentSequence?.slice(0, playersAnswer.length) as number[]
+      )
+    ) {
+      if (playersAnswer.length === currentSequence?.length) {
+        setScore((prev) => prev + 1);
+        console.log("Boa! Próximo nível...");
+      }
+    } else {
+      handleLoseGame();
     }
   };
 
@@ -76,25 +67,6 @@ export const GameProvider = ({ children }: Props) => {
     console.log("You lose...");
     gameSounds.fail.play();
   };
-
-  const handleCheckAnswer = () => {
-    if (
-      areArraysEqual(
-        playersAnswer,
-        currentSequence?.slice(0, playersAnswer.length) as number[]
-      )
-    ) {
-      if (playersAnswer.length === currentSequence?.length) {
-        setScore((prev) => prev + 1);
-        console.log("Boa! Próximo nível...");
-      }
-    } else {
-      handleLoseGame();
-    }
-  };
-
-  const handleCloseModal = () =>
-    setDisplayModal({ ...displayModal, isOpen: false });
 
   // Whenever the score changes, display a new sequence and wait for the user's answer
   useEffect(() => {
@@ -147,17 +119,23 @@ export const GameProvider = ({ children }: Props) => {
   return (
     <GameContext.Provider
       value={{
-        buttons,
+        setCurrentSequence,
+        setDisplayModal,
+        setIsPlayersTurn,
+        setScore,
+        playersAnswer,
+
         activeButton,
         bestScore,
-        handleClickButton,
         isPlayersTurn,
         isGameReady,
-        setIsGameReady,
         score,
-        handleLoseGame,
         displayModal,
-        handleCloseModal,
+        setBestScore,
+        setPlayersAnswer,
+        setActiveButton,
+        setIsGameReady,
+        handleLoseGame,
       }}
     >
       {children}

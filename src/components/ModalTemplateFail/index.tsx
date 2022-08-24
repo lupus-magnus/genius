@@ -1,9 +1,8 @@
-import { useContext } from "react";
-import { GameContext } from "../../contexts/GameContext";
+import { useGameLogic } from "../../hooks/useGameLogic";
 import * as S from "./styles";
 
 export const ModalTemplateFail = () => {
-  const { handleCloseModal } = useContext(GameContext);
+  const { handleCloseModal } = useGameLogic();
   return (
     <S.Container>
       <S.Title>You loose!</S.Title>

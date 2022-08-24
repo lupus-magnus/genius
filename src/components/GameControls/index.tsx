@@ -2,8 +2,8 @@ import { useContext } from "react";
 import { AiOutlineFlag } from "react-icons/ai";
 import { TbPlayerPlay } from "react-icons/tb";
 
+import { gameSounds } from "../../utils";
 import { GameContext } from "../../contexts/GameContext";
-import { useGameLogic } from "../../hooks/useGameLogic";
 
 import * as S from "./styles";
 
@@ -20,7 +20,6 @@ export const GameControls = ({ mobile }: Props) => {
     isPlayersTurn,
     handleLoseGame,
   } = useContext(GameContext);
-  const { gameSounds } = useGameLogic();
 
   return (
     <S.Container mobile={mobile}>
